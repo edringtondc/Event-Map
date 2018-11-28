@@ -1,0 +1,101 @@
+<!DOCTYPE <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Groupon Deal Finder</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <style>
+        #map {
+              width: auto;
+              height: 60%;
+              background-color: grey;
+            }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="container-fluid clearfix">
+
+        <!-- <div class="jumbotron text-center">
+            <h1 class="display-4">Group Project 1</h1>
+        </div> -->
+
+        <div class="row m-1">
+
+            <div class="col-4 p-1 border border-dark rounded" id="smCol1">
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="ZIP Code" aria-label="ZIP Code" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Submit</button>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="What are you looking for?" aria-label="What are you looking for?" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Find It</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-8 p-1 border border-dark rounded" id="lrgCol1">
+
+                <div id="map"></div>
+
+            </div>
+        </div>
+
+        <div class="row m-1">
+
+            <div class="col btn btn-outline-secondary text-center" id="eventList">
+                EVENT LISTINGS
+            </div>
+
+        </div>
+
+    </div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzSdHEzpxQrzsLIqaml-BGp9LEClOCkOU&callback=initMap">
+    </script>
+
+    <script>
+        // Initialize and add the map
+        var map;
+
+        function initMap() {
+            // The location of Uluru
+            var uluru = { lat: 39.67, lng: -104.96 },
+
+                // The map, centered at Uluru
+                map = new google.maps.Map(
+                    document.getElementById('map'), { zoom: 4, center: uluru });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({ position: uluru, map: map });
+        }
+    </script>
+
+
+</body>
+
+</html>
