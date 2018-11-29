@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <style>
+        #map {
+            height: 800px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="map"></div>
+    <script>
+        var map
+        function initMap() {
+            var startLocation = { lat: 39.67, lng: -104.96 };
+
+
+            map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 11, center: startLocation });
+
+
+        }
+        var eventLoc = "39.67,-104.96";
+        var eventDate = "today";
+        var eventRadius = 5;
+        var eventQueryURL = "https://api.eventful.com/json/events/search?location=" + eventLoc + "&date=" + eventDate + "&within=" + eventRadius + "&app_key=J3HPBSjCnXTGS2kV"
+        $.ajax({
+            method: "GET",
+            url: eventQueryURL,
+            contentType: 'application/json',
+            crossDomain: true,
+            dataType: 'jsonp'
+
+        }).then(function (response) {
+
+            for (var i = 0; i < response.events.event.length; i++) {
+
+                var lat1 = response.events.event[i].latitude;
+                var lon1 = response.events.event[i].longitude;
+
+                var latLng = {
+                    lat: parseFloat(lat1),
+                    lng: parseFloat(lon1)
+                }
+                var marker = new google.maps.Marker({ position: latLng, map: map });
+            }
+        })
+        var meetQueryURL = "https://cors-anywhere.herokuapp.com/https://api.meetup.com/2/open_events?&sign=true&photo-host=public&radius=100&zip=80209&text=coding&page=20&key=435738444150791a2870325319107d"
+            $.ajax({
+                url: meetQueryURL,
+                method: "GET"
+            }).then(function(Data1) {
+               console.log(Data1);
+                for (var i = 0; i < Data1.results.length; i++) {
+          
+
+            var lat = Data1.results[i].venue.lat;
+            var lon = Data1.results[i].venue.lon;
+            
+          var latLng = {
+              lat: parseFloat(lat),
+              lng: parseFloat(lon)
+          }
+          var marker = new google.maps.Marker({
+            position: latLng,
+            label: Data1.results[i].name,
+            map: map
+            });
+           
+        }
+    });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzSdHEzpxQrzsLIqaml-BGp9LEClOCkOU&callback=initMap">
+    </script>
+</body>
+
+</html>
