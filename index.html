@@ -43,14 +43,14 @@
             <div class="col-4 p-1 border border-dark rounded" id="smCol1">
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="ZIP Code" aria-label="ZIP Code" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" id="userLocation" placeholder="ZIP Code" aria-label="ZIP Code" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">Submit</button>
                     </div>
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="What are you looking for?" aria-label="What are you looking for?" aria-describedby="basic-addon2">
+                    <input type="text" id="searchTerm" class="form-control" placeholder="What are you looking for?" aria-label="What are you looking for?" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">Find It</button>
                     </div>
@@ -94,6 +94,10 @@
             var marker = new google.maps.Marker({ position: uluru, map: map });
         }
     </script>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-auth.js"></script>
+<script src="assets/javascript/app.js"></script>
 
 
 </body>
