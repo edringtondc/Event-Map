@@ -51,15 +51,46 @@
 
         <div class="row m-1">
 
-            <div class="col-md p-1 border border-dark rounded">
-                <div id="favoritesMap"></div>
+            <div class="col-md-4 p-1 border border-dark rounded">
+
+
+                <form role="form">
+                    <div class="form-group">
+                        <label for="searchTerm-input">What do you want to do?</label>
+                        <input class="form-control" id="searchTerm-input" type="text" rows="1"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location-input">Where are you now?</label>
+                        <input class="form-control" id="location-input" type="text" rows="1"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="radiusSlider-input">How far are you willing to go?</label>
+                        <input type="range" min="1" max="50" value="" class="form-control-range" id="radiusSlider-input">
+                    </div>
+
+                    <div class="form-group btn-group" role="group">
+                        <button type="button" class="btn btn-info" id="todayBtn">Today</button>
+                        <button type="button" class="btn btn-info" id="tomorrowBtn">Tomorrow</button>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-info" id="submitBtn" type="submit">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="col-md-8 p-1 border border-dark rounded">
+                <div id="eventsMap"></div>
             </div>
         </div>
 
         <div class="row m-1">
             <div class="col-md border border-dark rounded">
         
-                <table class="table table-responsive-md p-2 mt-2" id="favorites-table">
+                <table class="table table-responsive-md p-2 mt-2" id="events-table">
         
                     <thead class="thead">
                         <tr>
@@ -78,7 +109,7 @@
                                 popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
                                 and more recently with desktop publishing software like Aldus PageMaker including versions of
                                 Lorem Ipsum.</td>
-                            <td><input class="btn btn-info" type="submit" value="Remove Favorite" id="removeBtn"></td>    
+                            <td><input class="btn btn-info" type="submit" value="Add Favorite" id="favoriteBtn"></td>
                         </tr>
                         <tr>
                             <td>Rodeo</td>
@@ -89,7 +120,7 @@
                                 popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
                                 and more recently with desktop publishing software like Aldus PageMaker including versions of
                                 Lorem Ipsum.</td>
-                            <td><input class="btn btn-info" type="submit" value="Remove Favorite" id="removeBtn"></td>
+                            <td><input class="btn btn-info" type="submit" value="Add Favorite" id="favoriteBtn"></td>
                         </tr>
         
                     </tbody>
