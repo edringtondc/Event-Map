@@ -6,7 +6,7 @@ var config = {
     projectId: "meet-up-mapping",
     storageBucket: "meet-up-mapping.appspot.com",
     messagingSenderId: "1027713060208"
-};
+  };
 firebase.initializeApp(config);
 
 
