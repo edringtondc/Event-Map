@@ -12,19 +12,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
+    <!-- added Moment.js script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
     <style>
         #map {
               width: auto;
               height: 60%;
               background-color: grey;
-            }
+         }
+         #eventsMap  {
+             width: 500px;
+             height: 500px;
+         }
     </style>
 
 
@@ -84,8 +93,8 @@
 
             </div>
 
-            <div class="col-md-8 p-1 border border-dark rounded">
-                <div id="eventsMap"></div>
+            <div class="col-md-8 p-1 border border-dark rounded" id="eventsMap">
+                <div ></div>
             </div>
         </div>
 
@@ -133,32 +142,24 @@
 
     </div>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzSdHEzpxQrzsLIqaml-BGp9LEClOCkOU&callback=initMap">
-    </script>
-
-    <script>
-
-        // Initialize and add the map
+    <script type="text/javascript">
+        
         var map;
+var dataMU;
+var dataEventful;
+function initMap() {
+    var startLocation = { lat: 39.67, lng: -104.96 };
 
-        function initMap() {
-            // The location of Uluru
-            var uluru = { lat: 39.67, lng: -104.96 },
+    map = new google.maps.Map(document.getElementById("eventsMap"), { zoom: 11, center: startLocation });
 
-                // The map, centered at Uluru
-                map = new google.maps.Map(
-                    document.getElementById('map'), { zoom: 4, center: uluru });
-            // The marker, positioned at Uluru
-            var marker = new google.maps.Marker({ position: uluru, map: map });
-        }
+}
+        // google.maps.event.addDomListener(window, "load", initialize);
 
-
-        var rangeInput = $("#radiusSlider-input");
-        console.log("Range input is: " + rangeInput[0].value);
-
-
+        </script>
+    
+    <script src="./assets/javascript/app.js"></script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzSdHEzpxQrzsLIqaml-BGp9LEClOCkOU&callback=initMap">
     </script>
-
 
 </body>
 
