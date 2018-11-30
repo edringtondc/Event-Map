@@ -2,172 +2,36 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Groupon Deal Finder</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Groupon Deal Finder</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
 
-    <style>
-        #map {
-              width: auto;
-              height: 60%;
-              background-color: grey;
-            }
-    </style>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
 
-
-</head>
-
-<body>
-
-    <div class="container-fluid clearfix">
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-            <a class="navbar-brand" href="index.html">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="favorites.html">Favorites</a>
-                </div>
-            </div>
-        </nav>
-
-
-
-        <div class="row m-1">
-
-            <div class="col-md-4 p-1 border border-dark rounded" id="input-text">
-
-
-                <form role="form">
-                    <div class="form-group">
-                        <label for="searchTerm-input">What do you want to do?</label>
-                        <input class="form-control" id="searchTerm-input" type="text" rows="1"></input>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="location-input">Where are you now?</label>
-                        <input class="form-control" id="location-input" type="text" rows="1"></input>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="radiusSlider-input">How far are you willing to go?</label>
-                        <input type="range" min="1" max="50" value="" class="form-control-range" id="radiusSlider-input">
-                    </div>
-
-                    <div class="form-group btn-group" role="group">
-                        <button type="button" class="btn btn-info" id="todayBtn">Today</button>
-                        <button type="button" class="btn btn-info" id="tomorrowBtn">Tommorow</button>
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn btn-info" id="submitBtn" type="submit">Submit</button>
-                    </div>
-                </form>
-
-            </div>
-
-            <div class="col-md-8 p-1 border border-dark rounded" id="map-text">
-                <div id="map"></div>
-            </div>
-        </div>
-
-        <div class="row m-1">
-            <div class="col-md border border-dark rounded">
-        
-                <table class="table table-responsive-md p-2 mt-2" id="events-table">
-        
-                    <thead class="thead">
-                        <tr>
-                            <th scope="col">Event</th>
-                            <th scope="col">Description</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Hippie Rave</td>
-                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                                of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                                but also the leap into electronic typesetting, remaining essentially unchanged. It was
-                                popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                                and more recently with desktop publishing software like Aldus PageMaker including versions of
-                                Lorem Ipsum.</td>
-                            <td><input class="btn btn-info" type="submit" value="Add Favorite" id="favoriteBtn"></td>
-                        </tr>
-                        <tr>
-                            <td>Rodeo</td>
-                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                                of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                                but also the leap into electronic typesetting, remaining essentially unchanged. It was
-                                popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                                and more recently with desktop publishing software like Aldus PageMaker including versions of
-                                Lorem Ipsum.</td>
-                            <td><input class="btn btn-info" type="submit" value="Add Favorite" id="favoriteBtn"></td>
-                        </tr>
-        
-                    </tbody>
-                </table>
-        
-            </div>
-        </div>
-
-    </div>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzSdHEzpxQrzsLIqaml-BGp9LEClOCkOU&callback=initMap">
-    </script>
-
-    <script>
-
-        // Initialize and add the map
-        var map;
-
-        function initMap() {
-            // The location of Uluru
-            var uluru = { lat: 39.67, lng: -104.96 },
-
-                // The map, centered at Uluru
-                map = new google.maps.Map(
-                    document.getElementById('map'), { zoom: 4, center: uluru });
-            // The marker, positioned at Uluru
-            var marker = new google.maps.Marker({ position: uluru, map: map });
-        }
-
-
-        var rangeInput = $("#radiusSlider-input");
-        console.log("Range input is: " + rangeInput[0].value);
-
-
-    </script>
-
-
-</body>
-
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
+ 
+   
+  </head>
+  <body>
+    <!-- The surrounding HTML is left untouched by FirebaseUI.
+         Your app may use that space for branding, controls and other customizations.-->
+    <h1>Welcome to My Awesome App</h1>
+    <div id="firebaseui-auth-container"></div>
+    <script type="text/javascript" src="javascript/auth.js"></script>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
