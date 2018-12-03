@@ -12,7 +12,6 @@ firebase.initializeApp(config);
 var dataRef = firebase.database();
 //authorization
 
-
 //user login interface
 var uiConfig = {
   signInSuccessUrl: "main.html",
@@ -36,16 +35,25 @@ var uiConfig = {
   }
 };
 
+var infoWindow;
+var windowOpen = false;
+var mark;
+var today;
+var thisWeek;
+var favesArr = [];
+
+
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 // The start method will wait until the DOM is loaded.
 ui.start('#firebaseui-auth-container', uiConfig);
 
-
 //on submit, takes data from the input form and saves it to firebase database
 $("#submitBtn").on("click", function (event) {
   event.preventDefault();
-  $("events-table").empty();
+ 
+
+
   console.log("working");
   var searchTerm = $("#searchTerm-input").val().trim();
   var location = $("#location-input").val().trim();
@@ -59,20 +67,41 @@ $("#submitBtn").on("click", function (event) {
 
   eventFul();
   // meetUp();
+  $("#radiusSlider-input").val("");
+  $("#location-input").val("");
+  $("#searchTerm-input").val("");
+
 
 });
 
+$("#todayBtn").on("click", function (event) {
+  event.preventDefault()
+  today = $("#todayBtn").val()
+  console.log(today);
+  return today;
+});
+$("#thisWeekBtn").on("click", function (event) {
+  event.preventDefault()
+  thisWeek = $("#thisWeekBtn").val()
+  console.log(today);
+  return today;
+});
+
+
 function eventFul() {
+  $("#table-body").empty();
+        var searchTerm = $("#searchTerm-input").val().trim(); 
+        console.log(searchTerm);
+        var location = $("#location-input").val().trim();
+        console.log(location);
+        var radius = $("#radiusSlider-input").val().trim();
+        if (today) {
+            var eventQueryURL = "https://api.eventful.com/json/events/search?l="+location+"&keywords=" +searchTerm+ "&within=" +radius+ "&date="+ today + "&app_key=J3HPBSjCnXTGS2kV";
+        } else {
+            var eventQueryURL = "https://api.eventful.com/json/events/search?l="+location+"&keywords=" +searchTerm+ "&within=" +radius+ "&date="+ thisWeek + "&app_key=J3HPBSjCnXTGS2kV";
+        };      
 
-  var searchTerm = $("#searchTerm-input").val().trim();
-  console.log(searchTerm);
-  var location = $("#location-input").val().trim();
-  console.log(location);
-  var radius = $("#radiusSlider-input").val().trim();
-
-  console.log("radius is: " + radius)
-
-  var eventQueryURL = "https://api.eventful.com/json/events/search?l=" + location + "&keywords=" + searchTerm + "&within=" + radius + "&app_key=J3HPBSjCnXTGS2kV";
+        console.log("radius is: "+ radius);
   $.ajax({
     method: "GET",
     url: eventQueryURL,
@@ -84,20 +113,6 @@ function eventFul() {
     console.log(response);
     dataEventful = response;
 
-    // // ** eventful **//
-    // //name//
-    //dataEventful.events.event[i].title
-
-    // //description//
-    //dataEventful.events.event[i].description
-
-    // //time//
-    //dataEventful.events.event[i].start_time
-
-    // // venue//
-    //dataEventful.events.event[i].venue_name
-
-
     for (var i = 0; i < dataEventful.events.event.length; i++) {
 
       var lat1 = dataEventful.events.event[i].latitude;
@@ -107,102 +122,95 @@ function eventFul() {
         lat: parseFloat(lat1),
         lng: parseFloat(lon1)
       }
-      var marker = new google.maps.Marker({ position: latLng, map: map });
+
+
+      var marker = new google.maps.Marker({ position: latLng, map: map, store_id: dataEventful.events.event[i].id });
+
+      marker.addListener('click', function(){
+        mark = this;
+        var queryID = mark.get('store_id');
+        MakeInfoWindow(queryID);
+    });
+    google.maps.event.addListener(map, 'click', function(){
+      infoWindow.close(map);
+    })
 
       var title = dataEventful.events.event[i].title;
       var description = dataEventful.events.event[i].description;
-      var button = $("<td><input class='btn btn-info' type='submit' value='Add Favorite' class='favoriteBtn'>");
+      var button = $("<input class='btn btn-info' type='submit' value='Add Favorite' id='favoriteBtn'>");
+      var eventID = dataEventful.events.event[i].id;
+      var eventDate = moment(dataEventful.events.event[i].start_time, "HH:mm");
+      if (description == "" || description == null) {
+        description = "This event has no description";
+      }
+      else {
 
-      var newEvent = $("<tr class='m-1'>").append(
-        $("<td>").text(title),
-        $("<td><p>").html(description).text(),
-    
-      )
 
-      newEvent.attr(dataEventful.events.event[i].id);
-      // newEvent.attr("src", results.data.images.fixed_height_still.url);
+        var newEvent = $("<tr class='m-1'>").append(
+          $("<td>").text(title),
+          $("<td>").html(description),
+          $("<td id='date'>").text(eventDate),
+          // $("<td>").text(button)
 
-      $("#table-body").append(newEvent)
-      newEvent.append(button);
+
+        )
+
+        button.attr("data-id", eventID);
+        newEvent.attr("src", dataEventful.events.event[i].url);
+
+        $("#table-body").append(newEvent)
+        newEvent.append(button);
+      }
 
     }
-
-
 
 
   })
 }
 
+function MakeInfoWindow(data) {
+  if (windowOpen) {
+    infoWindow.close(map);
+  }
 
-// function renderEvents() {
-//   var eventTitle = event[i].title
-
-//   var newEvent = $("<tr>").append(
-//     $("<td>").text(title1),
-//     $("<td>").text(descript1),
-//   )
-
-//   newEvent.attr("row1")
-//   //newEvent.attr("data-id", eventID)
-
-//   $("#table-body").append(newEvent)
-//   var a = $("<td><input class='btn btn-info' type='submit' value='Add Favorite' id='favoriteBtn'>");
-
-
-//   newEvent.append(a)
-// }
-
-function meetUp() {
-
-  var meetQueryURL = "https://cors-anywhere.herokuapp.com/https://api.meetup.com/2/open_events?&sign=true&photo-host=public&radius=100&zip=80209&text=coding&page=20&key=435738444150791a2870325319107d"
+  // mark.infoWindow.close();
+  // infoWindow.close(map);
+  var queryID = data;
+  //query eventful by id
+  QueryURL = "https://api.eventful.com/json/events/get?id=" + queryID + "&app_key=J3HPBSjCnXTGS2kV";
   $.ajax({
-    url: meetQueryURL,
-    method: "GET"
-  }).then(function (Data1) {
-    dataMU = Data1
-    console.log(dataMU);
-    for (var i = 0; i < dataMU.results.length; i++) {
-      if ('venue' in dataMU.results[i]) {
-        console.log("YES");
-        var lat1 = dataMU.results[i].venue.lat;
-        var lon1 = dataMU.results[i].venue.lon;
+    method: "GET",
+    url: QueryURL,
+    contentType: 'application/json',
+    crossDomain: true,
+    dataType: 'jsonp'
 
-        console.log(lat1 + ":" + lon1);
+  }).then(function (response) {
+    console.log(response);
+    var lat2 = response.latitude;
+    var lon2 = response.longitude;
 
-        var latLng = {
-          lat: parseFloat(lat1),
-          lng: parseFloat(lon1)
-        }
-        var marker = new google.maps.Marker({
-          position: latLng,
-          label: dataMU.results[i].name,
-          map: map
-        });
-      }
-      else {
-        console.log("no");
-      }
-      // MEETUP//
-      // ** Here are the data paths for title/location/description **//
-
-      // // title
-      //dataMU.results[i].name
-
-      // //description
-      //dataMU.results[i].description
-
-      // //venue
-      // dataMU.results[i].venue.name
-
-      // //time
-      // dataMU.results[i].time
-
-
-
-
+    var latLng2 = {
+      lat: parseFloat(lat2),
+      lng: parseFloat(lon2)
     }
+
+
+
+    var infoContent = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading" style="text-align: center;">' + response.title + '</h1>' + '<div id="bodyContent">' + '<p>' + response.description + '</p>' + '<div style="text-align: center"><input class="btn btn-info" type="submit" value="Add Favorite" class="favoriteBtn"></div>';
+
+
+
+    infoWindow = new google.maps.InfoWindow({
+      content: infoContent,
+      position: latLng2
+    });
+    infoWindow.open(map);
+    windowOpen = true;
   });
+
 }
+
 
 function signOut() {
   //function to sign out user
@@ -224,11 +232,20 @@ $("#outbutton").on("click", function (event) {
   signOut();
 });
 
+$('#radiusSlider-input').change(function () {
+  var radius = $('#radiusSlider-input').val();
+  console.log(radius);
+  $('#sliderValue').text(radius + " mi");
+
+});
+
 
 //authentication state observer and gets user data
 firebase.auth().onAuthStateChanged(function (user) {
   console.log(user);
+
   if (user) {
+
 
     // User is signed in.
     var displayName = user.displayName;
@@ -246,49 +263,25 @@ firebase.auth().onAuthStateChanged(function (user) {
     // User is signed out.
     // ...
   }
-  console.log(uid);
-  // firebase.database().ref('users/' + uid).set({
-  //   userID: uid,
-  //   email: email,
-  // })
-  //Get the current userID
 
+  //favorites functions
   var userFavorites = dataRef.ref("/userFave" + uid);
 
-  $("#events-table").on("click", ".favoriteBtn", function (event) {
-    console.log("faves clicked");
+
+  $("#events-table").on("click", "#favoriteBtn", function (event) {
     event.preventDefault();
 
-    var event = "event name";
-    var description = "event description";
+    var eventID = $(this).attr("data-id");
+    console.log("id " + eventID);
+    userFavorites.push(eventID);
 
-    var selectedFavorite = {
-      event: event,
-      description: description,
-
-    }
-
-    userFavorites.push(selectedFavorite);
-
-
-    //Do something with your user data located in snapshot
   });
-});
 
 
 
 
 
-//favorites functions
 
-$('#radiusSlider-input').change(function () {
-  var radius = $('#radiusSlider-input').val();
-  console.log(radius);
-  $('#sliderValue').text(radius + " mi");
+
 
 });
-
-
-
-
-  // var userID = firebase.auth().currentUser.uid;
