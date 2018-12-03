@@ -23,6 +23,14 @@
 
     <!-- added Moment.js script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <!-- firebase CDN Tags -->
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-database.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
 
     <style>
         #map {
@@ -52,7 +60,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="favorites.html">Favorites</a>
-                    <button class="btn btn-info" id="sign-out">Sign Out</button>
+                    <button class="btn btn-info" id="outbutton">Sign Out</button>
 
                 </div>
             </div>
@@ -77,8 +85,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="radiusSlider-input">How far are you willing to go?</label>
-                        <input type="range" min="1" max="50" value="" class="form-control-range" id="radiusSlider-input">
+                        <label for="radiusSlider-input">How far are you willing to go?</label> <span id="sliderValue">5 mi</span>
+                        <input type="range" min="1" max="50" value="5" class="form-control-range" id="radiusSlider-input">
                     </div>
 
                     <div class="form-group btn-group" role="group">
@@ -110,9 +118,9 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table-body">
                         <tr>
-                            <td>Hippie Rave</td>
+                            <!-- <td>Hippie Rave</td>
                             <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
                                 the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
                                 of type and scrambled it to make a type specimen book. It has survived not only five centuries,
@@ -132,7 +140,7 @@
                                 and more recently with desktop publishing software like Aldus PageMaker including versions of
                                 Lorem Ipsum.</td>
                             <td><input class="btn btn-info" type="submit" value="Add Favorite" id="favoriteBtn"></td>
-                        </tr>
+                        </tr> -->
         
                     </tbody>
                 </table>
@@ -157,7 +165,8 @@ function initMap() {
 
         </script>
     
-    <script src="./assets/javascript/app.js"></script>
+    <script src="assets/javascript/app.js"></script>
+  
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzSdHEzpxQrzsLIqaml-BGp9LEClOCkOU&callback=initMap">
     </script>
 
