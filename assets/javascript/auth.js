@@ -1,27 +1,28 @@
-         // Initialize Firebase
-         var config = {
-          apiKey: "AIzaSyBFWAIW4lFZruyUro91Hp6zyF5nEX3ZxLo",
-          authDomain: "meet-up-mapping.firebaseapp.com",
-          databaseURL: "https://meet-up-mapping.firebaseio.com",
-          projectId: "meet-up-mapping",
-          storageBucket: "meet-up-mapping.appspot.com",
-          messagingSenderId: "1027713060208"
-        };
-          firebase.initializeApp(config);
-     
-     
+
+   // Initialize Firebase
+   var config = {
+    apiKey: "AIzaSyBZ979hB_iuXPeMV2Kp_VZIWS-tccUtuE4",
+    authDomain: "bored-project-5ef59.firebaseapp.com",
+    databaseURL: "https://bored-project-5ef59.firebaseio.com",
+    projectId: "bored-project-5ef59",
+    storageBucket: "bored-project-5ef59.appspot.com",
+    messagingSenderId: "254018358590"
+  };
+  firebase.initializeApp(config);
+
+
      // FirebaseUI config.
      var uiConfig = {
-        signInSuccessUrl: 'main.html',
+        signInSuccessUrl: "main.html",
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
-        //   firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        //   firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        //   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        //   firebase.auth.GithubAuthProvider.PROVIDER_ID,
+          // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+          // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+          // firebase.auth.GithubAuthProvider.PROVIDER_ID,
           firebase.auth.EmailAuthProvider.PROVIDER_ID,
         //   firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-          firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+          // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
         ],
         // tosUrl and privacyPolicyUrl accept either url string or a callback
         // function.
@@ -60,13 +61,16 @@ function signOut() {
 //function to sign out user
 firebase.auth().signOut().then(function() {
     console.log("you are logged out");
+          window.location.href="index.html"
+
     // Sign-out successful.
   }).catch(function(error) {
     // An error happened.
+    // console.log(error);
   });
 }
 
-$("#sign-out").on("click", function (event) {
+$("#outbutton").on("click", function (event) {
     console.log("this button was clicked")
   event.preventDefault();
   signOut();
@@ -89,8 +93,9 @@ firebase.auth().onAuthStateChanged(function(user) {
       var providerData = user.providerData;
       // ...
     } else {
-        window.location.href="../../main.html"
+      
       console.log("user got logged out")
+
       // User is signed out.
       // ...
     }
