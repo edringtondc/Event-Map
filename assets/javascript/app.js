@@ -41,6 +41,7 @@ var mark;
 var today;
 var thisWeek;
 var favesArr = [];
+var location1;
 
 
 // Initialize the FirebaseUI Widget using Firebase.
@@ -52,15 +53,34 @@ ui.start('#firebaseui-auth-container', uiConfig);
 $("#submitBtn").on("click", function (event) {
   event.preventDefault();
  
-
-
   console.log("working");
-  var searchTerm = $("#searchTerm-input").val().trim();
-  var location = $("#location-input").val().trim();
+  var searchTerm = $("#searchTerm-input").val().trim(); 
   var radius = $("#radiusSlider-input").val().trim();
 
+  location1 = $('#location-input').val();
+  if (typeof location1 == "number") {
+      var searchLocation1 = "postal_code:"+location1;
+  }
+  else if (typeof location1 == "string"){
+      var searchLocation1 = "locality:"+location1;
+  }
+
+  var QueryURL = "https://maps.googleapis.com/maps/api/geocode/json?components="+searchLocation1+"&key=AIzaSyAzSdHEzpxQrzsLIqaml-BGp9LEClOCkOU"
+  $.ajax({
+  method: "GET",
+  url: QueryURL,
+  // contentType: 'application/json',
+  // crossDomain: true,
+  // dataType: 'jsonp'
+
+}).then(function (response) {
+  console.log("map" ,response)
+  console.log(QueryURL);
+   map.panTo(response.results[0].geometry.location)
+});
+
   dataRef.ref().push({
-    location: location,
+    location: location1,
     search: searchTerm,
     radius: radius
   });
@@ -192,7 +212,7 @@ function MakeInfoWindow(data) {
 
 
 
-    var infoContent = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading" style="text-align: center;">' + response.title + '</h1>' + '<div id="bodyContent">' + '<p>' + response.description + '</p>' + '<div style="text-align: center"><input class="btn btn-info" type="submit" value="Add Favorite" class="favoriteBtn"></div>';
+    var infoContent = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading" style="text-align: center;">' + response.title + '</h1>' + '<div id="bodyContent">' + '<p>' + response.description + '</p>';
 
 
 
