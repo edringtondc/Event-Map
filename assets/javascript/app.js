@@ -159,8 +159,7 @@ function eventFul() {
       var description = dataEventful.events.event[i].description;
       // var button = $("<input class='btn btn-info mt-2' type='submit' value='Add Favorite' id='favoriteBtn'>");
       // var eventID = dataEventful.events.event[i].id;
-      var eventDate = moment(dataEventful.events.event[i].start_time, "HH:mm");
-      if (description == "" || description == null) {
+      var eventDate = moment(dataEventful.events.event[i].start_time).format('MMMM Do YYYY, h:mm:ss a');      if (description == "" || description == null) {
         description = "This event has no description";
       }
       else {
