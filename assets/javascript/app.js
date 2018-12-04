@@ -157,8 +157,8 @@ function eventFul() {
 
       var title = dataEventful.events.event[i].title;
       var description = dataEventful.events.event[i].description;
-      var button = $("<input class='btn btn-info' type='submit' value='Add Favorite' id='favoriteBtn'>");
-      var eventID = dataEventful.events.event[i].id;
+      // var button = $("<input class='btn btn-info mt-2' type='submit' value='Add Favorite' id='favoriteBtn'>");
+      // var eventID = dataEventful.events.event[i].id;
       var eventDate = moment(dataEventful.events.event[i].start_time, "HH:mm");
       if (description == "" || description == null) {
         description = "This event has no description";
@@ -169,17 +169,12 @@ function eventFul() {
         var newEvent = $("<tr class='m-1'>").append(
           $("<td>").text(title),
           $("<td>").html(description),
-          $("<td id='date'>").text(eventDate),
-          // $("<td>").text(button)
-
-
+          $("<td id='date'>").text(eventDate)
+    
         )
-
-        button.attr("data-id", eventID);
         newEvent.attr("src", dataEventful.events.event[i].url);
-
         $("#table-body").append(newEvent)
-        newEvent.append(button);
+       
       }
 
     }
@@ -217,7 +212,7 @@ function MakeInfoWindow(data) {
 
 
 
-    var infoContent = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading" style="text-align: center;">' + response.title + '</h1>' + '<div id="bodyContent">' + '<p>' + response.description + '</p>' + '<div style="text-align: center"><input class="btn btn-info" type="submit" value="Add Favorite" class="favoriteBtn"></div>';
+    var infoContent = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading" style="text-align: center;">' + response.title + '</h1>' + '<div id="bodyContent">' + '<p>' + response.description + '</p>';
 
 
 
